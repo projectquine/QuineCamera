@@ -23,5 +23,7 @@ When you open the app, you will see a viewfinder that displays the camera output
 5. Do the same as #4 for `URL snapshot` field but change the end of the url to `?action=snapshot`.
 6. Click `SAVE WEBCAM`
 
+![Alt text](images/mainsail-quine-setup.png.jpg?raw=true "Mainsail Webcam Setup")
+
 ## Limitations
 Currently the camera will only stream to the Mainsail UI when the app is running in the foreground of the phone and you can see the video stream on the phones screen. This should be fixed soon.
