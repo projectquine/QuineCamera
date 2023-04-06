@@ -3,7 +3,6 @@ package com.example.quinecamera
 import android.util.Log
 import fi.iki.elonen.NanoHTTPD
 import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.util.concurrent.atomic.AtomicReference
 
 class MJpegServer(port: Int) : NanoHTTPD(port) {
