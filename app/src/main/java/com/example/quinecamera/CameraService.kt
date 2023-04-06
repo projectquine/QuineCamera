@@ -48,17 +48,27 @@ class CameraService : Service() {
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            startCamera()
+            // Do not call startCamera() here
         } else {
             stopSelf()
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val portNumber = intent?.getIntExtra("portNumber", 8080) ?: 8080
+        val cameraSelectorStr = intent?.getStringExtra("cameraSelector") ?: "BACK"
+        val cameraSelector = if (cameraSelectorStr == "BACK") {
+            CameraSelector.DEFAULT_BACK_CAMERA
+        } else {
+            CameraSelector.DEFAULT_FRONT_CAMERA
+        }
+
+        startCamera(portNumber, cameraSelector)
         return START_NOT_STICKY
     }
 
-    private fun startCamera() {
+
+    private fun startCamera(port: Int, cameraSelector: CameraSelector) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
@@ -70,12 +80,13 @@ class CameraService : Service() {
                     it.setAnalyzer(Executors.newSingleThreadExecutor(), ImageAnalyzer(mjpegServer))
                 }
 
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
             cameraProvider.unbindAll()
             cameraProvider.bindToLifecycle(serviceLifecycleOwner, cameraSelector, imageAnalysis)
 
         }, ContextCompat.getMainExecutor(this))
+
+        mjpegServer.stopServer()
+        mjpegServer = MJpegServer(port)
     }
 
     override fun onDestroy() {
