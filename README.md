@@ -25,5 +25,5 @@ When you open the app, you will see a viewfinder that displays the camera output
 
 ![Alt text](images/mainsail-quine-setup.png?raw=true "Mainsail Webcam Setup")
 
-## Limitations
-Currently the camera will only stream to the Mainsail UI when the app is running in the foreground of the phone and you can see the video stream on the phones screen. This should be fixed soon.
+## Configuration
+Once the app is opened it will run as a background service and you can change the focus to other apps. The main screen for the app also allows you to select between using the back or front camera and setting the streaming server port.
